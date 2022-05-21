@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>画板</title>
+
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>var canvas = document.getElementById("canvas"); //获取屏幕宽高
+
+canvas.width = document.documentElement.clientWidth;
+canvas.height = document.documentElement.clientHeight;
+var ctx = canvas.getContext("2d"); //2维渲染
+
+ctx.fillStyle = "black";
+ctx.strokeStyle = 'none';
+ctx.lineWidth = 8;
+ctx.lineCap = "round"; //每个线的末尾是圆的还是方的
+//画线
+
+function drawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+}
+
+var painting = false;
+var last;
+var isTouchDevice = 'ontouchstart' in document.documentElement; //手机版
+
+if (isTouchDevice) {
+  canvas.ontouchstart = function (e) {
+    var x = e.touches[0].clientX;
+    var y = e.touches[0].clientY;
+    last = [x, y];
+  };
+
+  canvas.ontouchmove
+  /*触屏*/
+  = function (e) {
+    var x = e.touches[0].clientX;
+    var y = e.touches[0].clientY;
+    drawLine(last[0], last[1], x, y);
+    last = [x, y];
+  };
+} else {
+  canvas.onmousedown = function (e) {
+    painting = true;
+    last = [e.clientX, e.clientY];
+  };
+
+  canvas.onmousemove = function (e) {
+    if (painting === true) {
+      drawLine(last[0], last[1], e.clientX, e.clientY);
+      last = [e.clientX, e.clientY];
+    }
+  };
+
+  canvas.onmouseup = function () {
+    painting = false;
+  };
+}</script>
+
+</body>
+
+</html>
