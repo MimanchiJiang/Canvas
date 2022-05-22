@@ -10,8 +10,12 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" class="canvas">
 
+
+
+    </canvas>
+    <p class="p">请点击鼠标开始作画。清空请刷新界面</p>
     <script>var canvas = document.getElementById("canvas"); //获取屏幕宽高
 
 canvas.width = document.documentElement.clientWidth;
@@ -69,5 +73,19 @@ if (isTouchDevice) {
 }</script>
 
 </body>
+<style>* {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .canvas {
+        position: relative;
+    }
+
+    .p {
+        position: absolute;
+        top: 0;
+    }</style>
 
 </html>
